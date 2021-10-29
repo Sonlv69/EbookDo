@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
+// class lay data tu trang chinh cua 1 ebook, can truyen url cua trang nay vao ham getItemBook(url), return BookDetailModel
 public class BookData {
     private BookDetailModel book;
     private String bookUrl;
@@ -34,8 +35,8 @@ public class BookData {
                                 "> div#tabs");
                 if (element != null) {
                     Element getInfo = element.selectFirst("div#bibrec > div > table.bibrec > tbody");
+                    Elements getDownloadUrl = element.select("div#download > div > table.files > tbody > tr");
                     if (getInfo != null) {
-
                         Element getAuthor = element.selectFirst("[itemprop=creator]");
                         Element getTitle = element.selectFirst("[itemprop=headline]");
                         Element getLang = element.selectFirst("[property=dcterms:language]");
@@ -60,8 +61,21 @@ public class BookData {
                         if (getDownloads != null) { //so luong download
                             book.setDownloads("Downloads: " + getDownloads.text().replace(" downloads in the last 30 days.",""));
                         }
-
                     }
+                    if (getDownloadUrl != null) {
+                        for (Element row : getDownloadUrl) {
+                            if (row.attr("about").contains("epub.images")) {
+                                book.setDownloadUrl(row.attr("about"));
+                                break;
+                            } else if (row.attr("about").contains("epub.noimages")) {
+                                book.setDownloadUrl(row.attr("about"));
+                                break;
+                            } else {
+                                book.setDownloadUrl(null);
+                            }
+                        }
+                    }
+
                 }
                 // get cover
                 Element getCover = document.selectFirst(

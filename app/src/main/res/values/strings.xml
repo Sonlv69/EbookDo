@@ -7,4 +7,10 @@
     <string name="img_book_cover_preview">Book Cover</string>
     <string name="download">Download</string>
     <string name="downloads_time_tv">Downloads: 21</string>
+    <string name="action_search">Search</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_home">Home</string>
+    <string name="title_search">Search</string>
+    <string name="title_download">Download</string>
 </resources>

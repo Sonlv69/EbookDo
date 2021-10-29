@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,16 +21,19 @@ import com.example.ebookdo.model.BookDetailModel;
 import com.example.ebookdo.DetailBookActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class BookPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class BookPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
     private Activity activity;
     private ArrayList<BookDetailModel> bookList;
+    private ArrayList<BookDetailModel> bookListOld;
     private final int VIEW_TYPE_BOOK = 0;
     private final int VIEW_TYPE_LOADING = 1; // loading view
 
     public BookPreviewAdapter(Activity activity, ArrayList<BookDetailModel> bookList) {
         this.activity = activity;
         this.bookList = bookList;
+        this.bookListOld = bookList;
     }
 
     @NonNull
@@ -117,6 +122,39 @@ public class BookPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 activity.startActivity(new Intent(activity, DetailBookActivity.class).putExtra("previewBook",book));
             }
         });
-
     }
+
+    @Override
+    public Filter getFilter() { //ham tim kiem
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String strSearch = constraint.toString();
+                if (strSearch.isEmpty()){
+                    bookList = bookListOld;
+                }else {
+                    ArrayList<BookDetailModel> list = new ArrayList<>();
+                    for (BookDetailModel book : bookListOld){
+                        if (book.getBookTitle().toLowerCase().contains(' ' + strSearch.toLowerCase())
+                                || book.getBookTitle().toLowerCase().startsWith(strSearch.toLowerCase())) {
+                            list.add(book);
+                        }
+                    }
+                    bookList = list;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = bookList;
+
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                bookList= (ArrayList<BookDetailModel>) filterResults.values;
+                notifyDataSetChanged();;
+            }
+        };
+    }
+
 }
