@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">EBookDo</string>
+    <string name="book_name_preview">Book Name</string>
+    <string name="author_preview">Author</string>
+    <string name="book_preview_description">The Lost Hero is an American fantasy-adventure novel written by Rick Riordan, based on Greek and Roman mythology. It was published on October 12, 2010, and is the first book in The Heroes of Olympus series, a spin-off of the Percy Jackson the Olympians series. It is preceded by The Last Olympian of Percy Jackson the Olympians and followed by The Son of Neptune. The novel has since been translated into many languages and released as a hardcover, e-book, audiobook and paperback.</string>
+    <string name="book_rating_preview">Rating: 4.5/5</string>
+    <string name="img_book_cover_preview">Book Cover</string>
+    <string name="download">Download</string>
+    <string name="downloads_time_tv">Downloads: 21</string>
+</resources>
