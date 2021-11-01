@@ -77,14 +77,14 @@ public class BookPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         private ImageView imgCover;
         private TextView tvName;
         private TextView tvAuthor;
-        private TextView tvRate;
+        private TextView tvDownloads;
 
         public BookPreviewHolder(View itemView) {
             super(itemView);
             imgCover = itemView.findViewById(R.id.img_Cover);
             tvName = itemView.findViewById(R.id.tv_Book_Name);
             tvAuthor = itemView.findViewById(R.id.tv_Author);
-            tvRate = itemView.findViewById(R.id.tv_Downloads);
+            tvDownloads = itemView.findViewById(R.id.tv_Downloads);
         }
     }
 
@@ -108,10 +108,10 @@ public class BookPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         final BookDetailModel book = bookList.get(position);
         holder.tvName.setText(book.getBookTitle());
         holder.tvAuthor.setText(book.getAuthor());
-        holder.tvRate.setText(book.getDownloads());
+        holder.tvDownloads.setText(book.getDownloads() + " downloads");
         Glide.with(activity)
                 .load(book.getCover())
-                .apply(new RequestOptions().override(520, 800))
+                .apply(new RequestOptions().override(580, 900))
                 .centerCrop()
                 .placeholder(R.drawable.ic_loading)
                 .error(R.drawable.error)

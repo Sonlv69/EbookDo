@@ -59,7 +59,7 @@ public class BookData {
                             book.setRelease(getDate.text());
                         }
                         if (getDownloads != null) { //so luong download
-                            book.setDownloads("Downloads: " + getDownloads.text().replace(" downloads in the last 30 days.",""));
+                            book.setDownloads(getDownloads.text().replace(" downloads in the last 30 days.",""));
                         }
                     }
                     if (getDownloadUrl != null) {
