@@ -1,4 +1,4 @@
-package com.example.ebookdo.fragment;
+package com.kiluss.ebookdo.fragment;
 
 import static android.view.View.GONE;
 
@@ -15,14 +15,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
-import com.example.ebookdo.R;
-import com.example.ebookdo.adapter.BookPreviewAdapter;
-import com.example.ebookdo.custom.CustomLinearLayoutManager;
-import com.example.ebookdo.model.BookDetailModel;
-import com.example.ebookdo.process.BookData;
+import com.kiluss.ebookdo.R;
+import com.kiluss.ebookdo.adapter.BookPreviewAdapter;
+import com.kiluss.ebookdo.custom.CustomLinearLayoutManager;
+import com.kiluss.ebookdo.model.BookDetailModel;
+import com.kiluss.ebookdo.process.BookData;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

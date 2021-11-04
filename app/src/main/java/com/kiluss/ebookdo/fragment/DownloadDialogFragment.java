@@ -1,10 +1,7 @@
-package com.example.ebookdo.fragment;
+package com.kiluss.ebookdo.fragment;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,20 +14,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 
-import com.example.ebookdo.R;
-import com.example.ebookdo.model.BookDetailModel;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
+import com.kiluss.ebookdo.R;
+import com.kiluss.ebookdo.model.BookDetailModel;
 
 public class DownloadDialogFragment extends DialogFragment {
     public DownloadDialogFragment() {

@@ -1,6 +1,6 @@
-package com.example.ebookdo.process;
+package com.kiluss.ebookdo.process;
 
-import com.example.ebookdo.model.BookDetailModel;
+import com.kiluss.ebookdo.model.BookDetailModel;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

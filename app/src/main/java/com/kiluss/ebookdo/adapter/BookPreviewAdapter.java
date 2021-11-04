@@ -1,4 +1,4 @@
-package com.example.ebookdo.adapter;
+package com.kiluss.ebookdo.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,12 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.ebookdo.R;
-import com.example.ebookdo.model.BookDetailModel;
-import com.example.ebookdo.DetailBookActivity;
+import com.kiluss.ebookdo.R;
+import com.kiluss.ebookdo.model.BookDetailModel;
+import com.kiluss.ebookdo.DetailBookActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BookPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
     private Activity activity;

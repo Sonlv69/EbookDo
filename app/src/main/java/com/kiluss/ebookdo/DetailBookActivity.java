@@ -1,14 +1,12 @@
-package com.example.ebookdo;
+package com.kiluss.ebookdo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -17,7 +15,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -31,17 +28,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.ebookdo.fragment.DownloadDialogFragment;
-import com.example.ebookdo.model.BookDetailModel;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Stack;
+import com.kiluss.ebookdo.fragment.DownloadDialogFragment;
+import com.kiluss.ebookdo.model.BookDetailModel;
 
 public class DetailBookActivity extends AppCompatActivity {
 
@@ -213,7 +201,7 @@ public class DetailBookActivity extends AppCompatActivity {
         request.setAllowedOverRoaming(false);
         request.allowScanningByMediaScanner();
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalFilesDir(this,"/ebook",bookName + ".epub"); // get book title as file name
+        request.setDestinationInExternalFilesDir(this,"/epub",bookName + ".epub"); // get book title as file name
         //request.setDestinationInExternalPublicDir("Music", bookName + ".epub");
 
         //get download service and enqueue(hang doi) file

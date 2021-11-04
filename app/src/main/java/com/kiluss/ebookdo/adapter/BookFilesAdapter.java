@@ -1,24 +1,16 @@
-package com.example.ebookdo.adapter;
+package com.kiluss.ebookdo.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.ebookdo.DetailBookActivity;
-import com.example.ebookdo.R;
-import com.example.ebookdo.model.BookDetailModel;
+import com.kiluss.ebookdo.R;
 
 import java.util.ArrayList;
 

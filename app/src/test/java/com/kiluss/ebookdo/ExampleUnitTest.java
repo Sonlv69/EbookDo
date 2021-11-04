@@ -1,4 +1,4 @@
-package com.example.ebookdo;
+package com.kiluss.ebookdo;
 
 import org.junit.Test;
 

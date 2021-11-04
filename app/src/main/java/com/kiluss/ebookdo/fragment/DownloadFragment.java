@@ -1,9 +1,6 @@
-package com.example.ebookdo.fragment;
-
-import static androidx.core.content.PermissionChecker.checkSelfPermission;
+package com.kiluss.ebookdo.fragment;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.ContextWrapper;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -15,18 +12,15 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ebookdo.R;
-import com.example.ebookdo.adapter.BookFilesAdapter;
-import com.example.ebookdo.adapter.BookPreviewAdapter;
-import com.example.ebookdo.custom.CustomLinearLayoutManager;
+import com.kiluss.ebookdo.R;
+import com.kiluss.ebookdo.adapter.BookFilesAdapter;
+import com.kiluss.ebookdo.custom.CustomLinearLayoutManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -119,7 +113,7 @@ public class DownloadFragment extends Fragment {
 
     private void readEbookFiles() {
         ContextWrapper cw = new ContextWrapper(getContext());
-        String path =cw.getExternalFilesDir("/ebook").toString();
+        String path =cw.getExternalFilesDir("/epub").toString();
         Log.d("Files", "Path: " + path);
         File directory = new File(path);
         File[] files = directory.listFiles();

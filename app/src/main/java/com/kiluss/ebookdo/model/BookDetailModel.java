@@ -1,4 +1,4 @@
-package com.example.ebookdo.model;
+package com.kiluss.ebookdo.model;
 
 import java.io.Serializable;
 

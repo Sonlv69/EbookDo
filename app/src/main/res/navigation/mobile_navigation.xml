@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.ebookdo.fragment.HomeFragment"
+        android:name="com.kiluss.ebookdo.fragment.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="com.example.ebookdo.fragment.SearchFragment"
+        android:name="com.kiluss.ebookdo.fragment.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/navigation_download"
-        android:name="com.example.ebookdo.fragment.DownloadFragment"
+        android:name="com.kiluss.ebookdo.fragment.DownloadFragment"
         android:label="@string/title_download"
         tools:layout="@layout/fragment_download" />
 </navigation>

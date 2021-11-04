@@ -1,4 +1,4 @@
-package com.example.ebookdo.fragment;
+package com.kiluss.ebookdo.fragment;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -21,12 +20,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ebookdo.MainActivity;
-import com.example.ebookdo.R;
-import com.example.ebookdo.adapter.BookPreviewAdapter;
-import com.example.ebookdo.custom.CustomLinearLayoutManager;
-import com.example.ebookdo.model.BookDetailModel;
-import com.example.ebookdo.process.BookData;
+import com.kiluss.ebookdo.R;
+import com.kiluss.ebookdo.adapter.BookPreviewAdapter;
+import com.kiluss.ebookdo.custom.CustomLinearLayoutManager;
+import com.kiluss.ebookdo.model.BookDetailModel;
+import com.kiluss.ebookdo.process.BookData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jsoup.Jsoup;

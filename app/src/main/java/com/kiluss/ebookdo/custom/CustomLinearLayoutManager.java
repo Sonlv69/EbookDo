@@ -1,4 +1,4 @@
-package com.example.ebookdo.custom;
+package com.kiluss.ebookdo.custom;
 
 import android.content.Context;
 import android.graphics.PointF;
