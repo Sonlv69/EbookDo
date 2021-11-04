@@ -1,5 +1,8 @@
 package com.kiluss.ebookdo.fragment;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -20,6 +23,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.kiluss.ebookdo.R;
 import com.kiluss.ebookdo.adapter.BookPreviewAdapter;
 import com.kiluss.ebookdo.custom.CustomLinearLayoutManager;
@@ -48,6 +52,8 @@ public class SearchFragment extends Fragment {
     private EditText searchText;
     private int startIndex;
     private boolean endOfResult = false;
+    private ShimmerFrameLayout shimmerFrameLayout;
+    private View v;
     int test = 0;
 
     private boolean isLoading = false;
@@ -55,10 +61,13 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_search, container, false);
+        v = inflater.inflate(R.layout.fragment_search, container, false);
         recyclerView = v.findViewById(R.id.rcv_search_fragment);
         fabToTopList = v.findViewById(R.id.fab_to_top_search);
         searchText = v.findViewById(R.id.search_view);
+        shimmerFrameLayout = v.findViewById(R.id.shimmer_view_container);
+
+        shimmerFrameLayout.setVisibility(GONE);
 
         Log.i("test","search fragment oncreate");
 
@@ -81,6 +90,7 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    searchText.onEditorAction(EditorInfo.IME_ACTION_DONE);
                     endOfResult = false;
                     recyclerView.setVisibility(View.INVISIBLE);
                     listBook.clear();
@@ -90,6 +100,7 @@ public class SearchFragment extends Fragment {
                     SEARCH_URL = processSearchInput(searchText.getText().toString());
                     Log.i("result", MY_URL);
                     new SearchFragment.DownloadTask().execute(MY_URL);
+                    shimmerFrameLayout.setVisibility(View.VISIBLE);
                     return true;
                 }
                 return false;
@@ -135,6 +146,10 @@ public class SearchFragment extends Fragment {
                 if (bookPreviewAdapter == null) {
                     bookPreviewAdapter = new BookPreviewAdapter(getActivity(),books);
                     recyclerView.setAdapter(bookPreviewAdapter);
+                    // stop man hinh loading
+                    shimmerFrameLayout = v.findViewById(R.id.shimmer_view_container);
+                    shimmerFrameLayout.setVisibility(GONE);
+                    // show list book len
                     recyclerView.setVisibility(View.VISIBLE);
                 } else if (listBook.size() > 0) {
                     if (listBook.get(scrollPosition - 1) == null) {

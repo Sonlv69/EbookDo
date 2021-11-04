@@ -1,26 +1,38 @@
 package com.kiluss.ebookdo.adapter;
 
+import static android.provider.ContactsContract.Directory.PACKAGE_NAME;
+
+import static java.net.URLConnection.guessContentTypeFromName;
+
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kiluss.ebookdo.BuildConfig;
 import com.kiluss.ebookdo.R;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class BookFilesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private Activity activity;
-    private ArrayList<String> bookList;
+    private ArrayList<File> files;
 
-    public BookFilesAdapter(Activity activity, ArrayList<String> bookList) {
+    public BookFilesAdapter(Activity activity, ArrayList<File> files) {
         this.activity = activity;
-        this.bookList = bookList;
+        this.files = files;
     }
 
     @NonNull
@@ -38,7 +50,7 @@ public class BookFilesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        return bookList == null ? 0 : bookList.size();
+        return files == null ? 0 : files.size();
     }
 
 
@@ -55,14 +67,37 @@ public class BookFilesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private void populateItemRows(BookFilesAdapter.BookPreviewHolder holder, int position) {
 
-        final String book = bookList.get(position);
-        holder.tvName.setText(book);
+        File file = files.get(position);
+        holder.tvName.setText(file.getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //activity.startActivity(new Intent(activity, DetailBookActivity.class).putExtra("previewBook",book));
-                Toast.makeText(activity.getApplicationContext(), "Open file " + book, Toast.LENGTH_SHORT).show();
+                open_file(file);
             }
         });
     }
+
+    public void open_file(File file) {
+        MimeTypeMap myMime = MimeTypeMap.getSingleton();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        String mimeType =
+                myMime.getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(file.getName()));
+        if(android.os.Build.VERSION.SDK_INT >=24) {
+            Uri fileURI = FileProvider.getUriForFile(Objects.requireNonNull(activity.getApplicationContext()),
+                    BuildConfig.APPLICATION_ID + ".provider",
+                    file);
+            intent.setDataAndType(fileURI, mimeType);
+
+        }else {
+            intent.setDataAndType(Uri.fromFile(file), mimeType);
+        }
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        try {
+            activity.getApplicationContext().startActivity(intent);
+        }catch (ActivityNotFoundException e){
+            Toast.makeText(activity.getApplicationContext(), "No Application found to open this type of file.", Toast.LENGTH_LONG).show();
+
+        }
+    }
+
 }

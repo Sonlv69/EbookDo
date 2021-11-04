@@ -43,7 +43,7 @@ public class HomeFragment extends Fragment {
     private int scrollPosition;
     private FloatingActionButton fabToTopList;
     private CustomLinearLayoutManager linearLayoutManager;
-    private ShimmerFrameLayout container;
+    private ShimmerFrameLayout shimmerFrameLayout;
     private int bookNumber;
     private View v;
     int test = 0;
@@ -105,8 +105,8 @@ public class HomeFragment extends Fragment {
                 if (bookPreviewAdapter == null) {
                     bookPreviewAdapter = new BookPreviewAdapter(getActivity(),books);
                     recyclerView.setAdapter(bookPreviewAdapter);
-                    container = v.findViewById(R.id.shimmer_view_container);
-                    container.setVisibility(GONE);
+                    shimmerFrameLayout = v.findViewById(R.id.shimmer_view_container);
+                    shimmerFrameLayout.setVisibility(GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                 } else if (listBook.size() > 0) {
                     if (listBook.get(scrollPosition - 1) == null) {
@@ -182,9 +182,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onRefresh() {
                 recyclerView.setVisibility(View.INVISIBLE);
-                container = v.findViewById(R.id.shimmer_view_container);
+                shimmerFrameLayout = v.findViewById(R.id.shimmer_view_container);
                 //container.startShimmer(); // stop animation
-                container.setVisibility(View.VISIBLE);
+                shimmerFrameLayout.setVisibility(View.VISIBLE);
                 listBook.clear();
                 //bookPreviewAdapter.notifyItemRangeRemoved(0,size-1);
                 bookPreviewAdapter = null;

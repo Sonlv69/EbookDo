@@ -32,7 +32,7 @@ public class DownloadFragment extends Fragment {
     private RecyclerView recyclerView;
     private CustomLinearLayoutManager linearLayoutManager;
     private BookFilesAdapter bookFilesAdapter;
-    private ArrayList<String> books;
+    private ArrayList<File> files;
 
 
 
@@ -86,7 +86,7 @@ public class DownloadFragment extends Fragment {
             readEbookFiles();
         }
         //set adapter
-        bookFilesAdapter = new BookFilesAdapter(getActivity(),books);
+        bookFilesAdapter = new BookFilesAdapter(getActivity(),files);
         recyclerView.setAdapter(bookFilesAdapter);
 
         return v;
@@ -116,14 +116,14 @@ public class DownloadFragment extends Fragment {
         String path =cw.getExternalFilesDir("/epub").toString();
         Log.d("Files", "Path: " + path);
         File directory = new File(path);
-        File[] files = directory.listFiles();
+        File[] allFiles = directory.listFiles();
         String canRead = String.valueOf(directory.canRead());
-        books = new ArrayList<String>();
-        if(directory.canRead() && files!=null) {
-            Log.d("Files", "Size: " + files.length);
-            for(File file: files) {
+        files = new ArrayList<File>();
+        if(directory.canRead() && allFiles!=null) {
+            Log.d("Files", "Size: " + allFiles.length);
+            for(File file: allFiles) {
                 Log.d("FILE",file.getName());
-                books.add(file.getName());
+                files.add(file);
             }
         }
         else
