@@ -114,21 +114,13 @@ public class DownloadFragment extends Fragment {
     private void readEbookFiles() {
         ContextWrapper cw = new ContextWrapper(getContext());
         String path =cw.getExternalFilesDir("/epub").toString();
-        Log.d("Files", "Path: " + path);
         File directory = new File(path);
         File[] allFiles = directory.listFiles();
-        String canRead = String.valueOf(directory.canRead());
         files = new ArrayList<File>();
         if(directory.canRead() && allFiles!=null) {
-            Log.d("Files", "Size: " + allFiles.length);
             for(File file: allFiles) {
-                Log.d("FILE",file.getName());
                 files.add(file);
             }
         }
-        else
-            Log.d("Null?", "it is null");
-            Log.d("Can read?", canRead);
-
     }
 }

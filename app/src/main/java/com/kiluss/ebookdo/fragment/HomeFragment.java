@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -23,6 +24,7 @@ import com.kiluss.ebookdo.model.BookDetailModel;
 import com.kiluss.ebookdo.process.BookData;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.kiluss.ebookdo.viewmodel.HomeFragmentViewModel;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -45,6 +47,7 @@ public class HomeFragment extends Fragment {
     private CustomLinearLayoutManager linearLayoutManager;
     private ShimmerFrameLayout shimmerFrameLayout;
     private int bookNumber;
+    private HomeFragmentViewModel homeFragmentViewModel;
     private View v;
     int test = 0;
 
@@ -62,17 +65,29 @@ public class HomeFragment extends Fragment {
         Log.i("create","created");
         swipeRefreshLayout = v.findViewById(R.id.swipe_layout);
         fabToTopList = v.findViewById(R.id.fab_to_top_home);
+        shimmerFrameLayout = v.findViewById(R.id.shimmer_view_home_container);
+
+        homeFragmentViewModel = new ViewModelProvider(getActivity()).get(HomeFragmentViewModel.class);
 
         //((ShimmerFrameLayout) container).startShimmer(); // If auto-start is set to false
         listBook = new ArrayList<>();
-        bookNumber = 0;
-
-        //RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        //recyclerView.addItemDecoration(itemDecoration);
-        new DownloadTask().execute(MY_URL);
+        listBook = homeFragmentViewModel.getBookList();
+        bookNumber = homeFragmentViewModel.getBookNumber();
 
         initializeRefreshListener();
         initScrollListener();
+
+        //RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        //recyclerView.addItemDecoration(itemDecoration);
+        if (listBook.size() > 0) {
+            bookPreviewAdapter = new BookPreviewAdapter(getActivity(), listBook);
+            recyclerView.setAdapter(bookPreviewAdapter);
+            shimmerFrameLayout.setVisibility(GONE);
+        } else {
+            new DownloadTask().execute(MY_URL);
+        }
+        Log.i("booknumber", String.valueOf(bookNumber));
+        Log.i("size", String.valueOf(listBook.size()));
         fabToTopList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,24 +110,23 @@ public class HomeFragment extends Fragment {
             listBook.addAll(executeMainContent(strings[0]));
             return listBook;
         }
-
         // sau khi get duoc all data vao ham nay de set giao dien
         @Override
-        protected void onPostExecute(ArrayList<BookDetailModel> books) {
+        protected void onPostExecute (ArrayList<BookDetailModel> books) {
             super.onPostExecute(books);
             //Setup data recyclerView
-            if(getActivity() != null) {
+            if (getActivity() != null) {
                 if (bookPreviewAdapter == null) {
-                    bookPreviewAdapter = new BookPreviewAdapter(getActivity(),books);
+                    bookPreviewAdapter = new BookPreviewAdapter(getActivity(), books);
                     recyclerView.setAdapter(bookPreviewAdapter);
-                    shimmerFrameLayout = v.findViewById(R.id.shimmer_view_container);
+                    shimmerFrameLayout = v.findViewById(R.id.shimmer_view_home_container);
                     shimmerFrameLayout.setVisibility(GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                 } else if (listBook.size() > 0) {
                     if (listBook.get(scrollPosition - 1) == null) {
                         listBook.remove(scrollPosition - 1);
                     }
-                    bookPreviewAdapter.notifyItemRemoved(scrollPosition-1);
+                    bookPreviewAdapter.notifyItemRemoved(scrollPosition - 1);
                     bookPreviewAdapter.notifyDataSetChanged();
                     isLoading = false;
                 }
@@ -140,11 +154,11 @@ public class HomeFragment extends Fragment {
                     if (sub != null) {
                         for (Element element : sub) {
                             BookDetailModel book;
-                            //Element getTitle = element.selectFirst("div.top_block > div.title");
-//                                book.setBookTitle(element.text());
                             String lastBookNumber = element.attr("href");
-                            if (bookNumber == 0)
+                            if (bookNumber == 0) {
                                 bookNumber = Integer.parseInt(lastBookNumber.replace("/ebooks/","")) - 10;
+                                homeFragmentViewModel.setBookNumber(bookNumber);
+                            }
                             String bookUrl = "https://www.gutenberg.org" + lastBookNumber;
                             BookData bookData = new BookData();
                             book = bookData.getItemBook(bookUrl);
@@ -182,10 +196,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onRefresh() {
                 recyclerView.setVisibility(View.INVISIBLE);
-                shimmerFrameLayout = v.findViewById(R.id.shimmer_view_container);
+                shimmerFrameLayout = v.findViewById(R.id.shimmer_view_home_container);
                 //container.startShimmer(); // stop animation
                 shimmerFrameLayout.setVisibility(View.VISIBLE);
                 listBook.clear();
+                homeFragmentViewModel.setListBook(listBook);
+                bookNumber = 0;
+                homeFragmentViewModel.setBookNumber(bookNumber);
                 //bookPreviewAdapter.notifyItemRangeRemoved(0,size-1);
                 bookPreviewAdapter = null;
                 new DownloadTask().execute(MY_URL);
@@ -205,6 +222,7 @@ public class HomeFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                Log.i("pos", String.valueOf(linearLayoutManager.findLastCompletelyVisibleItemPosition()));
                 // hien thi nut ve dau trang
                 if(linearLayoutManager.findLastVisibleItemPosition() > 10)
                     fabToTopList.setVisibility(View.VISIBLE);
@@ -215,7 +233,6 @@ public class HomeFragment extends Fragment {
                         if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == listBook.size() - 1) {
                             isLoading = true;
                             //bottom of list!
-                            test =2;
                             loadMore();
                         }
                     }

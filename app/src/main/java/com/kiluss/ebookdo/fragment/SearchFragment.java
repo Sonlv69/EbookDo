@@ -65,7 +65,7 @@ public class SearchFragment extends Fragment {
         recyclerView = v.findViewById(R.id.rcv_search_fragment);
         fabToTopList = v.findViewById(R.id.fab_to_top_search);
         searchText = v.findViewById(R.id.search_view);
-        shimmerFrameLayout = v.findViewById(R.id.shimmer_view_container);
+        shimmerFrameLayout = v.findViewById(R.id.shimmer_view_search_container);
 
         shimmerFrameLayout.setVisibility(GONE);
 
@@ -147,7 +147,7 @@ public class SearchFragment extends Fragment {
                     bookPreviewAdapter = new BookPreviewAdapter(getActivity(),books);
                     recyclerView.setAdapter(bookPreviewAdapter);
                     // stop man hinh loading
-                    shimmerFrameLayout = v.findViewById(R.id.shimmer_view_container);
+                    shimmerFrameLayout = v.findViewById(R.id.shimmer_view_search_container);
                     shimmerFrameLayout.setVisibility(GONE);
                     // show list book len
                     recyclerView.setVisibility(View.VISIBLE);

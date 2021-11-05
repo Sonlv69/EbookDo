@@ -48,7 +48,7 @@
                 android:layout_marginTop="8dp">
 
                 <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/shimmer_view_container"
+                    android:id="@+id/shimmer_view_search_container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_constraintBottom_toBottomOf="parent"

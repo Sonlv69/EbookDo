@@ -29,6 +29,7 @@ import java.util.Objects;
 public class BookFilesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private Activity activity;
     private ArrayList<File> files;
+    private Toast toast;
 
     public BookFilesAdapter(Activity activity, ArrayList<File> files) {
         this.activity = activity;
@@ -68,6 +69,7 @@ public class BookFilesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private void populateItemRows(BookFilesAdapter.BookPreviewHolder holder, int position) {
 
         File file = files.get(position);
+        toast = Toast.makeText(activity.getApplicationContext(), "" , Toast.LENGTH_SHORT );
         holder.tvName.setText(file.getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +97,7 @@ public class BookFilesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         try {
             activity.getApplicationContext().startActivity(intent);
         }catch (ActivityNotFoundException e){
-            Toast.makeText(activity.getApplicationContext(), "No Application found to open this type of file.", Toast.LENGTH_LONG).show();
+            toast.makeText(activity.getApplicationContext(), "No Application found to open this type of file.", Toast.LENGTH_SHORT).show();
 
         }
     }
