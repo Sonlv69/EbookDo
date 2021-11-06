@@ -1,11 +1,15 @@
 package com.kiluss.ebookdo.viewmodel;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.ViewModel;
 
 import com.kiluss.ebookdo.adapter.BookPreviewAdapter;
 import com.kiluss.ebookdo.model.BookDetailModel;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class HomeFragmentViewModel extends ViewModel {
     private int bookNumber;
@@ -16,8 +20,11 @@ public class HomeFragmentViewModel extends ViewModel {
         this.bookNumber = bookNumber;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void setListBook(ArrayList<BookDetailModel> listBook) {
+        //this.listBook.clear();
         this.listBook = listBook;
+        this.listBook.removeIf(Objects::isNull);
     }
 
     public ArrayList<BookDetailModel> getBookList() {

@@ -3,6 +3,7 @@ package com.kiluss.ebookdo.fragment;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -85,7 +87,10 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        initScrollListener();
+        searchText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(searchText, InputMethodManager.SHOW_FORCED);
+
         searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -110,7 +115,8 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         return v;
     }
-        public String processSearchInput(String input) {
+
+    public String processSearchInput(String input) {
         String result = "https://www.gutenberg.org/ebooks/search/?query="+ input.replace(" ","+") + "&start_index=";
         return result;
     }

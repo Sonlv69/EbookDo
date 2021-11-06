@@ -3,9 +3,11 @@ package com.kiluss.ebookdo.fragment;
 import static android.view.View.GONE;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -100,7 +102,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    //Download HTML bằng AsynTask
+    //Download content, phan tich HTML bằng AsynTask
     private class DownloadTask extends AsyncTask<String, Void, ArrayList<BookDetailModel>> {
 
         private static final String TAG = "DownloadTask";
@@ -117,12 +119,14 @@ public class HomeFragment extends Fragment {
             //Setup data recyclerView
             if (getActivity() != null) {
                 if (bookPreviewAdapter == null) {
+                    Log.i("check post execute", "adapter null");
                     bookPreviewAdapter = new BookPreviewAdapter(getActivity(), books);
                     recyclerView.setAdapter(bookPreviewAdapter);
                     shimmerFrameLayout = v.findViewById(R.id.shimmer_view_home_container);
                     shimmerFrameLayout.setVisibility(GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                 } else if (listBook.size() > 0) {
+                    Log.i("check post execute", "adapter not null");
                     if (listBook.get(scrollPosition - 1) == null) {
                         listBook.remove(scrollPosition - 1);
                     }
@@ -131,6 +135,7 @@ public class HomeFragment extends Fragment {
                     isLoading = false;
                 }
             }
+            homeFragmentViewModel.setListBook(listBook);
             swipeRefreshLayout.setRefreshing(false);
             recyclerView.setVisibility(View.VISIBLE);
         }
@@ -181,6 +186,7 @@ public class HomeFragment extends Fragment {
                     if (pos == 1) break;
                 }
                 bookNumber = pos;
+                homeFragmentViewModel.setBookNumber(bookNumber);
             }
 
         } catch (IOException e) {
@@ -193,6 +199,7 @@ public class HomeFragment extends Fragment {
     void initializeRefreshListener() {
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onRefresh() {
                 recyclerView.setVisibility(View.INVISIBLE);
@@ -222,7 +229,7 @@ public class HomeFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                Log.i("pos", String.valueOf(linearLayoutManager.findLastCompletelyVisibleItemPosition()));
+                //Log.i("pos", String.valueOf(linearLayoutManager.findLastCompletelyVisibleItemPosition()));
                 // hien thi nut ve dau trang
                 if(linearLayoutManager.findLastVisibleItemPosition() > 10)
                     fabToTopList.setVisibility(View.VISIBLE);
