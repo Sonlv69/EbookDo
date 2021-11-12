@@ -195,13 +195,13 @@ public class SearchFragment extends Fragment {
                         //Add to list
                         mList.add(book);
                         i++;
-                        if (i==10) {
+                        if (i==5) {
                             startIndex += i;
                             MY_URL = SEARCH_URL + startIndex;
                             break;
                         }
                     }
-                    if (i<10) {
+                    if (i<5) {
                         endOfResult = true;
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override

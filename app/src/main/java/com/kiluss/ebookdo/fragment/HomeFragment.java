@@ -113,6 +113,7 @@ public class HomeFragment extends Fragment {
             return listBook;
         }
         // sau khi get duoc all data vao ham nay de set giao dien
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         protected void onPostExecute (ArrayList<BookDetailModel> books) {
             super.onPostExecute(books);
@@ -157,11 +158,13 @@ public class HomeFragment extends Fragment {
                                     "> div.lib.latest.no-select " +
                                     "> a");
                     if (sub != null) {
+                        int numCount = 0;
                         for (Element element : sub) {
+                            numCount++;
                             BookDetailModel book;
                             String lastBookNumber = element.attr("href");
                             if (bookNumber == 0) {
-                                bookNumber = Integer.parseInt(lastBookNumber.replace("/ebooks/","")) - 10;
+                                bookNumber = Integer.parseInt(lastBookNumber.replace("/ebooks/","")) - 5;
                                 homeFragmentViewModel.setBookNumber(bookNumber);
                             }
                             String bookUrl = "https://www.gutenberg.org" + lastBookNumber;
@@ -170,6 +173,7 @@ public class HomeFragment extends Fragment {
 
                             //Add to list
                             mList.add(book);
+                            if (numCount == 5) break;
                         }
                     }
 
@@ -177,7 +181,7 @@ public class HomeFragment extends Fragment {
             } else {
                 String preUrl = "https://www.gutenberg.org/ebooks/";
                 int pos;
-                for (pos = bookNumber; pos > bookNumber - 10; pos--) {
+                for (pos = bookNumber; pos > bookNumber - 5; pos--) {
                     BookDetailModel book;
                     String bookUrl = preUrl + pos;
                     BookData bookData = new BookData();

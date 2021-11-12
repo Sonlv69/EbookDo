@@ -23,6 +23,7 @@ public class BookData {
 
     public BookDetailModel getItemBook(String bookLink) {
         book = new BookDetailModel();
+        book.setBookUrl(bookLink);
         Document document = null;
         try {
             document = (Document) Jsoup.connect(bookLink).get();

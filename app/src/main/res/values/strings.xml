@@ -14,4 +14,5 @@
     <string name="title_search">Search</string>
     <string name="title_download">Download</string>
     <string name="cancel_dialog">Cancel</string>
+    <string name="relative_book_textview">No records found</string>
 </resources>
