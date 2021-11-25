@@ -304,7 +304,7 @@ public class DetailBookActivity extends AppCompatActivity {
 
                         //Add to list
                         mList.add(book);
-                        if (bookCount == 5) break;
+                        if (bookCount == 6) break;
                     }
                 }
             }

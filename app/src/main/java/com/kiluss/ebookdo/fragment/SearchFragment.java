@@ -88,8 +88,7 @@ public class SearchFragment extends Fragment {
         });
 
         searchText.requestFocus();
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(searchText, InputMethodManager.SHOW_FORCED);
+        showKeyboard(requireContext());
 
         searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -114,6 +113,11 @@ public class SearchFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return v;
+    }
+
+    public static void showKeyboard(Context context) {
+        ((InputMethodManager) (context).getSystemService(Context.INPUT_METHOD_SERVICE))
+                .toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
     public String processSearchInput(String input) {

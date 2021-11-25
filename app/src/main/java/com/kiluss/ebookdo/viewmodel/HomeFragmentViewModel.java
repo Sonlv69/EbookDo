@@ -13,8 +13,8 @@ import java.util.Objects;
 
 public class HomeFragmentViewModel extends ViewModel {
     private int bookNumber;
-
     private ArrayList<BookDetailModel> listBook;
+    private boolean isLoading = false;
 
     public void setBookNumber(int bookNumber) {
         this.bookNumber = bookNumber;
@@ -36,5 +36,13 @@ public class HomeFragmentViewModel extends ViewModel {
 
     public int getBookNumber() {
         return bookNumber;
+    }
+
+    public boolean isLoading() {
+        return isLoading;
+    }
+
+    public void setLoading(boolean loading) {
+        isLoading = loading;
     }
 }

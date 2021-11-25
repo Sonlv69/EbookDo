@@ -74,7 +74,7 @@ public class BookRelativePreviewAdapter extends RecyclerView.Adapter<RecyclerVie
         holder.tvName.setText(book.getBookTitle());
         Glide.with(activity)
                 .load(book.getCover())
-                .apply(new RequestOptions().override(240, 340))
+                .apply(new RequestOptions().override(540, 760))
                 .centerCrop()
                 .placeholder(R.drawable.ic_loading)
                 .error(R.drawable.error)

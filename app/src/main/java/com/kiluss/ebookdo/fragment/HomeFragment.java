@@ -54,8 +54,6 @@ public class HomeFragment extends Fragment {
     int test = 0;
 
 
-    private boolean isLoading = false;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,11 +62,11 @@ public class HomeFragment extends Fragment {
         recyclerView = v.findViewById(R.id.rcv_book_preview);
         linearLayoutManager = new CustomLinearLayoutManager(this.requireContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        Log.i("create","created");
         swipeRefreshLayout = v.findViewById(R.id.swipe_layout);
         fabToTopList = v.findViewById(R.id.fab_to_top_home);
         shimmerFrameLayout = v.findViewById(R.id.shimmer_view_home_container);
 
+        //khoi tao view model
         homeFragmentViewModel = new ViewModelProvider(getActivity()).get(HomeFragmentViewModel.class);
 
         //((ShimmerFrameLayout) container).startShimmer(); // If auto-start is set to false
@@ -86,7 +84,11 @@ public class HomeFragment extends Fragment {
             recyclerView.setAdapter(bookPreviewAdapter);
             shimmerFrameLayout.setVisibility(GONE);
         } else {
-            new DownloadTask().execute(MY_URL);
+            if (!homeFragmentViewModel.isLoading()) {
+                Log.i("loading","not load");
+                homeFragmentViewModel.setLoading(true);
+                new DownloadTask().execute(MY_URL);
+            }
         }
         Log.i("booknumber", String.valueOf(bookNumber));
         Log.i("size", String.valueOf(listBook.size()));
@@ -133,12 +135,12 @@ public class HomeFragment extends Fragment {
                     }
                     bookPreviewAdapter.notifyItemRemoved(scrollPosition - 1);
                     bookPreviewAdapter.notifyDataSetChanged();
-                    isLoading = false;
                 }
             }
             homeFragmentViewModel.setListBook(listBook);
             swipeRefreshLayout.setRefreshing(false);
             recyclerView.setVisibility(View.VISIBLE);
+            homeFragmentViewModel.setLoading(false);
         }
     }
 
@@ -240,9 +242,9 @@ public class HomeFragment extends Fragment {
                 else
                     fabToTopList.setVisibility(View.INVISIBLE);
                 if (bookPreviewAdapter != null) {
-                    if (!isLoading && bookNumber > 1) { // not in loading state
+                    if (!homeFragmentViewModel.isLoading() && bookNumber > 1) { // not in loading state
                         if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == listBook.size() - 1) {
-                            isLoading = true;
+                            homeFragmentViewModel.setLoading(true);
                             //bottom of list!
                             loadMore();
                         }
