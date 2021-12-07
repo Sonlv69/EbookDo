@@ -15,7 +15,6 @@ public class HomeFragmentViewModel extends ViewModel {
     private int bookNumber;
     private ArrayList<BookDetailModel> listBook;
     private boolean isLoading = false;
-
     public void setBookNumber(int bookNumber) {
         this.bookNumber = bookNumber;
     }

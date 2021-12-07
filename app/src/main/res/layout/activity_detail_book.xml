@@ -5,7 +5,7 @@
     android:id="@+id/constraint_layout_detail_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailBookActivity">
+    tools:context=".activity.DetailBookActivity">
 
     <TextView
         android:id="@+id/tv_book_name_detail"

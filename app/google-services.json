@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "305715918374",
+    "project_id": "ebookdo-c4ddd",
+    "storage_bucket": "ebookdo-c4ddd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305715918374:android:343214cdcd9925b58358e7",
+        "android_client_info": {
+          "package_name": "com.kiluss.ebookdo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "305715918374-jic9j2g8ie036bm24bhua37c5vk5mj44.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kiluss.ebookdo",
+            "certificate_hash": "a4e7c658ef7838b42cd6596448bf44da4ac2bec9"
+          }
+        },
+        {
+          "client_id": "305715918374-openg67nlrll6a5rq4gg9u9v594a9a8n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHkDHQJV-4emMXOROwy44hBRODj5YTkBc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "305715918374-openg67nlrll6a5rq4gg9u9v594a9a8n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

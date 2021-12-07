@@ -1,31 +1,23 @@
 package com.kiluss.ebookdo.adapter;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.kiluss.ebookdo.BuildConfig;
-import com.kiluss.ebookdo.DetailBookActivity;
+import com.kiluss.ebookdo.activity.DetailBookActivity;
 import com.kiluss.ebookdo.R;
 import com.kiluss.ebookdo.model.BookDetailModel;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class BookRelativePreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private Activity activity;
@@ -74,7 +66,7 @@ public class BookRelativePreviewAdapter extends RecyclerView.Adapter<RecyclerVie
         holder.tvName.setText(book.getBookTitle());
         Glide.with(activity)
                 .load(book.getCover())
-                .apply(new RequestOptions().override(540, 760))
+                .apply(new RequestOptions().override(340, 520))
                 .centerCrop()
                 .placeholder(R.drawable.ic_loading)
                 .error(R.drawable.error)

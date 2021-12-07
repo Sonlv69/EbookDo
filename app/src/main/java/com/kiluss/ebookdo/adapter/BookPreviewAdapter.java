@@ -18,7 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.kiluss.ebookdo.R;
 import com.kiluss.ebookdo.model.BookDetailModel;
-import com.kiluss.ebookdo.DetailBookActivity;
+import com.kiluss.ebookdo.activity.DetailBookActivity;
 
 import java.util.ArrayList;
 

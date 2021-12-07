@@ -1,13 +1,16 @@
 package com.kiluss.ebookdo.fragment;
 
+import static android.content.ContentValues.TAG;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,8 +29,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.kiluss.ebookdo.OnTextClickListener;
 import com.kiluss.ebookdo.R;
 import com.kiluss.ebookdo.adapter.BookPreviewAdapter;
+import com.kiluss.ebookdo.adapter.SearchHistoryAdapter;
 import com.kiluss.ebookdo.custom.CustomLinearLayoutManager;
 import com.kiluss.ebookdo.model.BookDetailModel;
 import com.kiluss.ebookdo.process.BookData;
@@ -40,33 +50,54 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 public class SearchFragment extends Fragment {
     public static String MY_URL = "https://www.gutenberg.org/";
     public static String SEARCH_URL = "https://www.gutenberg.org/";
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerViewResult;
+    private RecyclerView recyclerViewHistory;
     private BookPreviewAdapter bookPreviewAdapter;
+    private SearchHistoryAdapter searchHistoryAdapter;
     private ArrayList<BookDetailModel> listBook;
+    private ArrayList<String> listHistory;
     private int scrollPosition;
     private FloatingActionButton fabToTopList;
     private CustomLinearLayoutManager linearLayoutManager;
+    private CustomLinearLayoutManager linearLayoutManagerHis;
     private EditText searchText;
     private int startIndex;
     private boolean endOfResult = false;
     private ShimmerFrameLayout shimmerFrameLayout;
     private View v;
-    int test = 0;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mDatabaseReference;
 
     private boolean isLoading = false;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        //create database
+        mDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mDatabase.getReference();
+        mDatabaseReference = mDatabase.getReference().child("searchText");
+        addPostEventListener(mDatabaseReference);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_search, container, false);
-        recyclerView = v.findViewById(R.id.rcv_search_fragment);
+
+        recyclerViewResult = v.findViewById(R.id.rcv_search_fragment);
+        recyclerViewHistory = v.findViewById(R.id.rcv_history_fragment);
         fabToTopList = v.findViewById(R.id.fab_to_top_search);
-        searchText = v.findViewById(R.id.search_view);
+        searchText = (EditText)v.findViewById(R.id.search_view);
         shimmerFrameLayout = v.findViewById(R.id.shimmer_view_search_container);
 
         shimmerFrameLayout.setVisibility(GONE);
@@ -74,8 +105,11 @@ public class SearchFragment extends Fragment {
         Log.i("test","search fragment oncreate");
 
         linearLayoutManager = new CustomLinearLayoutManager(this.requireContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        linearLayoutManagerHis = new CustomLinearLayoutManager(this.requireContext());
+        recyclerViewResult.setLayoutManager(linearLayoutManager);
         listBook = new ArrayList<>();
+        recyclerViewHistory.setLayoutManager(linearLayoutManagerHis);
+
         //RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         //recyclerView.addItemDecoration(itemDecoration);
 
@@ -83,7 +117,7 @@ public class SearchFragment extends Fragment {
         fabToTopList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recyclerView.smoothScrollToPosition(0);
+                recyclerViewResult.smoothScrollToPosition(0);
             }
         });
 
@@ -96,7 +130,7 @@ public class SearchFragment extends Fragment {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     searchText.onEditorAction(EditorInfo.IME_ACTION_DONE);
                     endOfResult = false;
-                    recyclerView.setVisibility(View.INVISIBLE);
+                    recyclerViewResult.setVisibility(View.INVISIBLE);
                     listBook.clear();
                     bookPreviewAdapter = null;
                     startIndex = 1;
@@ -104,15 +138,73 @@ public class SearchFragment extends Fragment {
                     SEARCH_URL = processSearchInput(searchText.getText().toString());
                     Log.i("result", MY_URL);
                     new SearchFragment.DownloadTask().execute(MY_URL);
+                    recyclerViewHistory.setVisibility(View.INVISIBLE);
                     shimmerFrameLayout.setVisibility(View.VISIBLE);
+                    mDatabaseReference.push().setValue(searchText.getText().toString());
                     return true;
                 }
                 return false;
             }
         });
 
+        searchText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerViewResult.setVisibility(View.INVISIBLE);
+                recyclerViewHistory.setVisibility(View.VISIBLE);
+            }
+        });
+
         // Inflate the layout for this fragment
         return v;
+    }
+
+    //ham get data from database
+    private void addPostEventListener(DatabaseReference mPostReference) {
+        // [START post_value_event_listener]
+        ValueEventListener postListener = new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                Log.d(TAG, "map is: " + map);
+                if (map != null) {
+                    ArrayList<Object> objectList = new ArrayList<>(map.values());
+                    Log.d(TAG, "Value is: " + objectList.toString());
+                    List<String> strings = objectList.stream()
+                            .map(object -> Objects.toString(object, null))
+                            .collect(Collectors.toList());
+                    listHistory = (ArrayList) strings;
+                    searchHistoryAdapter = new SearchHistoryAdapter(listHistory, new OnTextClickListener() {
+                        @Override
+                        public void onTextClick(String data) {
+                            searchText.setText(data);
+                            endOfResult = false;
+                            recyclerViewResult.setVisibility(View.INVISIBLE);
+                            listBook.clear();
+                            bookPreviewAdapter = null;
+                            startIndex = 1;
+                            MY_URL =  processSearchInput(searchText.getText().toString()) + startIndex;
+                            SEARCH_URL = processSearchInput(searchText.getText().toString());
+                            Log.i("result", MY_URL);
+                            new SearchFragment.DownloadTask().execute(MY_URL);
+                            recyclerViewHistory.setVisibility(View.INVISIBLE);
+                            shimmerFrameLayout.setVisibility(View.VISIBLE);
+                        }
+                    });
+                    recyclerViewHistory.setAdapter(searchHistoryAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        mPostReference.addValueEventListener(postListener);
+        // [END post_value_event_listener]
     }
 
     public static void showKeyboard(Context context) {
@@ -125,16 +217,6 @@ public class SearchFragment extends Fragment {
         return result;
     }
 
-//    // an back de tat search view khong thoat app
-//    @Override
-//    public void onBackPressed() {
-//        if(!searchView.isIconified()) {
-//            searchView.setQuery("", false);
-//            searchView.setIconified(true);
-//            return;
-//        }
-//        super.onBackPressed();
-//    }
 
     //Download HTML bằng AsynTask
     private class DownloadTask extends AsyncTask<String, Void, ArrayList<BookDetailModel>> {
@@ -155,12 +237,12 @@ public class SearchFragment extends Fragment {
             if(getActivity() != null) {
                 if (bookPreviewAdapter == null) {
                     bookPreviewAdapter = new BookPreviewAdapter(getActivity(),books);
-                    recyclerView.setAdapter(bookPreviewAdapter);
+                    recyclerViewResult.setAdapter(bookPreviewAdapter);
                     // stop man hinh loading
                     shimmerFrameLayout = v.findViewById(R.id.shimmer_view_search_container);
                     shimmerFrameLayout.setVisibility(GONE);
                     // show list book len
-                    recyclerView.setVisibility(View.VISIBLE);
+                    recyclerViewResult.setVisibility(View.VISIBLE);
                 } else if (listBook.size() > 0) {
                     if (listBook.get(scrollPosition - 1) == null) {
                         listBook.remove(scrollPosition - 1);
@@ -170,7 +252,7 @@ public class SearchFragment extends Fragment {
                     isLoading = false;
                 }
             }
-            recyclerView.setVisibility(View.VISIBLE);
+            recyclerViewResult.setVisibility(View.VISIBLE);
         }
     }
 
@@ -230,9 +312,9 @@ public class SearchFragment extends Fragment {
         return mList;
     }
 
-    //ham xu ly viec cuon recyclerview
+    //ham xu ly viec cuon recyclerViewResult
     private void initScrollListener() {
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerViewResult.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);

@@ -16,10 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookDo">
         <activity
-            android:name="com.kiluss.ebookdo.DetailBookActivity"
+            android:name="com.kiluss.ebookdo.activity.DetailBookActivity"
             android:exported="true" />
         <activity
-            android:name="com.kiluss.ebookdo.MainActivity"
+            android:name="com.kiluss.ebookdo.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

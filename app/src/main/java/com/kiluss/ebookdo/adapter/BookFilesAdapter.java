@@ -23,6 +23,7 @@ import com.kiluss.ebookdo.BuildConfig;
 import com.kiluss.ebookdo.R;
 
 import java.io.File;
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -41,12 +42,12 @@ public class BookFilesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // tao layout view holder tuy theo loai view item
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book_file,parent,false);
-        return new BookFilesAdapter.BookPreviewHolder(view);
+        return new BookFilesAdapter.BookFileHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        populateItemRows((BookFilesAdapter.BookPreviewHolder) viewHolder, position);
+        populateItemRows((BookFilesAdapter.BookFileHolder) viewHolder, position);
     }
 
     @Override
@@ -55,18 +56,17 @@ public class BookFilesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
 
-    class BookPreviewHolder extends RecyclerView.ViewHolder{
-
+    class BookFileHolder extends RecyclerView.ViewHolder{
         private TextView tvName;
 
-        public BookPreviewHolder(View itemView) {
+        public BookFileHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_book_file);
         }
     }
     
 
-    private void populateItemRows(BookFilesAdapter.BookPreviewHolder holder, int position) {
+    private void populateItemRows(BookFilesAdapter.BookFileHolder holder, int position) {
 
         File file = files.get(position);
         toast = Toast.makeText(activity.getApplicationContext(), "" , Toast.LENGTH_SHORT );

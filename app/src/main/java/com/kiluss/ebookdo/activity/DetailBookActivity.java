@@ -1,4 +1,4 @@
-package com.kiluss.ebookdo;
+package com.kiluss.ebookdo.activity;
 
 import static android.view.View.GONE;
 
@@ -23,25 +23,21 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.kiluss.ebookdo.adapter.BookPreviewAdapter;
+import com.kiluss.ebookdo.R;
 import com.kiluss.ebookdo.adapter.BookRelativePreviewAdapter;
 import com.kiluss.ebookdo.custom.CustomLinearLayoutManager;
 import com.kiluss.ebookdo.fragment.DownloadDialogFragment;
-import com.kiluss.ebookdo.fragment.HomeFragment;
 import com.kiluss.ebookdo.model.BookDetailModel;
 import com.kiluss.ebookdo.process.BookData;
 
