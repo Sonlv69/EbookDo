@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.kiluss.ebookdo.OnTextClickListener;
 import com.kiluss.ebookdo.R;
@@ -49,10 +51,16 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 
@@ -76,19 +84,25 @@ public class SearchFragment extends Fragment {
     private View v;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mDatabaseReference;
+    private DateTimeFormatter dtf;
+    private String android_id;
 
     private boolean isLoading = false;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        //create unique id for each device
+        android_id = Settings.Secure.getString(getContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         //create database
         mDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mDatabase.getReference();
-        mDatabaseReference = mDatabase.getReference().child("searchText");
-        addPostEventListener(mDatabaseReference);
+        mDatabaseReference = mDatabase.getReference().child(android_id);
+        //addPostEventListener(mDatabaseReference);
+        Log.i("test","search fragment attach");
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -109,9 +123,59 @@ public class SearchFragment extends Fragment {
         recyclerViewResult.setLayoutManager(linearLayoutManager);
         listBook = new ArrayList<>();
         recyclerViewHistory.setLayoutManager(linearLayoutManagerHis);
-
+        dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        Log.d(TAG, "Time is: " + dtf.format(LocalDateTime.now()));
         //RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         //recyclerView.addItemDecoration(itemDecoration);
+
+        //tao query and xu li vs database
+        Query query = mDatabaseReference.limitToLast(5);
+        query.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Get Post object and use the values to update the UI
+                Map<String, String> map = (Map<String, String>) snapshot.getValue();
+                Log.d(TAG, "map is: " + map);
+                if (map != null) {
+                    List<String> objectList = new ArrayList<>(map.keySet());
+                    Collections.sort(objectList);
+                    Log.d(TAG, "Value is: " + objectList.toString());
+                    List<String> strings = new ArrayList<>();
+                    for (String value: objectList) {
+                        strings.add(map.get(value));
+                    }
+                    Collections.reverse(strings);
+                    listHistory = (ArrayList) strings;
+                    Log.d(TAG, "string is: " + listHistory.toString());
+                    searchHistoryAdapter = new SearchHistoryAdapter(listHistory, new OnTextClickListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onTextClick(String data) {
+                            recyclerViewResult.setVisibility(View.INVISIBLE);
+                            searchText.setText(data);
+                            mDatabaseReference.child(dtf.format(LocalDateTime.now())).setValue(data);
+                            endOfResult = false;
+                            listBook.clear();
+                            bookPreviewAdapter = null;
+                            startIndex = 1;
+                            MY_URL =  processSearchInput(searchText.getText().toString()) + startIndex;
+                            SEARCH_URL = processSearchInput(searchText.getText().toString());
+                            Log.i("result", MY_URL);
+                            new SearchFragment.DownloadTask().execute(MY_URL);
+                            recyclerViewHistory.setVisibility(View.INVISIBLE);
+                            shimmerFrameLayout.setVisibility(View.VISIBLE);
+                        }
+                    });
+                    recyclerViewHistory.setAdapter(searchHistoryAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "loadPost:onCancelled", error.toException());
+            }
+        });
 
         initScrollListener();
         fabToTopList.setOnClickListener(new View.OnClickListener() {
@@ -130,17 +194,17 @@ public class SearchFragment extends Fragment {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     searchText.onEditorAction(EditorInfo.IME_ACTION_DONE);
                     endOfResult = false;
-                    recyclerViewResult.setVisibility(View.INVISIBLE);
                     listBook.clear();
                     bookPreviewAdapter = null;
                     startIndex = 1;
                     MY_URL =  processSearchInput(searchText.getText().toString()) + startIndex;
                     SEARCH_URL = processSearchInput(searchText.getText().toString());
                     Log.i("result", MY_URL);
+                    recyclerViewResult.setVisibility(View.INVISIBLE);
                     new SearchFragment.DownloadTask().execute(MY_URL);
                     recyclerViewHistory.setVisibility(View.INVISIBLE);
                     shimmerFrameLayout.setVisibility(View.VISIBLE);
-                    mDatabaseReference.push().setValue(searchText.getText().toString());
+                    mDatabaseReference.child(dtf.format(LocalDateTime.now())).setValue(searchText.getText().toString());
                     return true;
                 }
                 return false;
@@ -151,6 +215,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 recyclerViewResult.setVisibility(View.INVISIBLE);
+                shimmerFrameLayout.setVisibility(View.INVISIBLE);
                 recyclerViewHistory.setVisibility(View.VISIBLE);
             }
         });
@@ -177,9 +242,11 @@ public class SearchFragment extends Fragment {
                             .collect(Collectors.toList());
                     listHistory = (ArrayList) strings;
                     searchHistoryAdapter = new SearchHistoryAdapter(listHistory, new OnTextClickListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void onTextClick(String data) {
                             searchText.setText(data);
+                            mDatabaseReference.child(dtf.format(LocalDateTime.now())).setValue(data);
                             endOfResult = false;
                             recyclerViewResult.setVisibility(View.INVISIBLE);
                             listBook.clear();
@@ -242,7 +309,9 @@ public class SearchFragment extends Fragment {
                     shimmerFrameLayout = v.findViewById(R.id.shimmer_view_search_container);
                     shimmerFrameLayout.setVisibility(GONE);
                     // show list book len
-                    recyclerViewResult.setVisibility(View.VISIBLE);
+                    if(recyclerViewHistory.getVisibility() == View.INVISIBLE) {
+                        recyclerViewResult.setVisibility(View.VISIBLE);
+                    }
                 } else if (listBook.size() > 0) {
                     if (listBook.get(scrollPosition - 1) == null) {
                         listBook.remove(scrollPosition - 1);
@@ -252,7 +321,9 @@ public class SearchFragment extends Fragment {
                     isLoading = false;
                 }
             }
-            recyclerViewResult.setVisibility(View.VISIBLE);
+            if(recyclerViewHistory.getVisibility() == View.INVISIBLE) {
+                recyclerViewResult.setVisibility(View.VISIBLE);
+            }
         }
     }
 
