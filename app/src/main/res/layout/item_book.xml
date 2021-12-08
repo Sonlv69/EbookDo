@@ -50,7 +50,7 @@
         <ImageView
             android:id="@+id/img_Cover"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="250dp"
             android:contentDescription="@string/img_book_cover_preview" />
 
         <TextView
