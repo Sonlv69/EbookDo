@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
@@ -154,6 +156,7 @@ public class SearchFragment extends Fragment {
                         public void onTextClick(String data) {
                             recyclerViewResult.setVisibility(View.INVISIBLE);
                             searchText.setText(data);
+                            hideKeyboard(requireContext(),v);
                             mDatabaseReference.child(dtf.format(LocalDateTime.now())).setValue(data);
                             endOfResult = false;
                             listBook.clear();
@@ -246,6 +249,7 @@ public class SearchFragment extends Fragment {
                         @Override
                         public void onTextClick(String data) {
                             searchText.setText(data);
+                            hideKeyboard(requireContext(),v);
                             mDatabaseReference.child(dtf.format(LocalDateTime.now())).setValue(data);
                             endOfResult = false;
                             recyclerViewResult.setVisibility(View.INVISIBLE);
@@ -277,6 +281,11 @@ public class SearchFragment extends Fragment {
     public static void showKeyboard(Context context) {
         ((InputMethodManager) (context).getSystemService(Context.INPUT_METHOD_SERVICE))
                 .toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    public static void hideKeyboard(Context context, View view) {
+        ((InputMethodManager) (context).getSystemService(Context.INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(view.getApplicationWindowToken(),0 );
     }
 
     public String processSearchInput(String input) {
