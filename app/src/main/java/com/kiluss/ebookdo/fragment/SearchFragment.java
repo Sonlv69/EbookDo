@@ -140,14 +140,14 @@ public class SearchFragment extends Fragment {
                 Map<String, String> map = (Map<String, String>) snapshot.getValue();
                 Log.d(TAG, "map is: " + map);
                 if (map != null) {
-                    List<String> objectList = new ArrayList<>(map.keySet());
-                    Collections.sort(objectList);
-                    Log.d(TAG, "Value is: " + objectList.toString());
+                    List<String> keyList = new ArrayList<>(map.keySet());
+                    Collections.sort(keyList);
+                    Collections.reverse(keyList);
                     List<String> strings = new ArrayList<>();
-                    for (String value: objectList) {
-                        strings.add(map.get(value));
+                    for (String key: keyList) {
+                        strings.add(map.get(key));
                     }
-                    Collections.reverse(strings);
+                    Log.d(TAG, "Key is: " + keyList.toString());
                     listHistory = (ArrayList) strings;
                     Log.d(TAG, "string is: " + listHistory.toString());
                     searchHistoryAdapter = new SearchHistoryAdapter(listHistory, new OnTextClickListener() {
@@ -168,6 +168,10 @@ public class SearchFragment extends Fragment {
                             new SearchFragment.DownloadTask().execute(MY_URL);
                             recyclerViewHistory.setVisibility(View.INVISIBLE);
                             shimmerFrameLayout.setVisibility(View.VISIBLE);
+                        }
+                        @Override
+                        public void onDeleteClick(int pos){
+                            mDatabaseReference.child(keyList.get(pos)).removeValue();
                         }
                     });
                     recyclerViewHistory.setAdapter(searchHistoryAdapter);
@@ -225,57 +229,6 @@ public class SearchFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return v;
-    }
-
-    //ham get data from database
-    private void addPostEventListener(DatabaseReference mPostReference) {
-        // [START post_value_event_listener]
-        ValueEventListener postListener = new ValueEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                Log.d(TAG, "map is: " + map);
-                if (map != null) {
-                    ArrayList<Object> objectList = new ArrayList<>(map.values());
-                    Log.d(TAG, "Value is: " + objectList.toString());
-                    List<String> strings = objectList.stream()
-                            .map(object -> Objects.toString(object, null))
-                            .collect(Collectors.toList());
-                    listHistory = (ArrayList) strings;
-                    searchHistoryAdapter = new SearchHistoryAdapter(listHistory, new OnTextClickListener() {
-                        @RequiresApi(api = Build.VERSION_CODES.O)
-                        @Override
-                        public void onTextClick(String data) {
-                            searchText.setText(data);
-                            hideKeyboard(requireContext(),v);
-                            mDatabaseReference.child(dtf.format(LocalDateTime.now())).setValue(data);
-                            endOfResult = false;
-                            recyclerViewResult.setVisibility(View.INVISIBLE);
-                            listBook.clear();
-                            bookPreviewAdapter = null;
-                            startIndex = 1;
-                            MY_URL =  processSearchInput(searchText.getText().toString()) + startIndex;
-                            SEARCH_URL = processSearchInput(searchText.getText().toString());
-                            Log.i("result", MY_URL);
-                            new SearchFragment.DownloadTask().execute(MY_URL);
-                            recyclerViewHistory.setVisibility(View.INVISIBLE);
-                            shimmerFrameLayout.setVisibility(View.VISIBLE);
-                        }
-                    });
-                    recyclerViewHistory.setAdapter(searchHistoryAdapter);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-        mPostReference.addValueEventListener(postListener);
-        // [END post_value_event_listener]
     }
 
     public static void showKeyboard(Context context) {

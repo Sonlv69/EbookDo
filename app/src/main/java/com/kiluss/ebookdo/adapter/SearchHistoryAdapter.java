@@ -4,6 +4,7 @@ package com.kiluss.ebookdo.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,10 +46,12 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
     class SearchHistoryHolder extends RecyclerView.ViewHolder{
 
         private TextView tvName;
+        private ImageView deleteBtn;
 
         public SearchHistoryHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_search_history_item);
+            deleteBtn = itemView.findViewById(R.id.img_delete_history);
         }
     }
 
@@ -56,10 +59,16 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
     private void populateItemRows(SearchHistoryAdapter.SearchHistoryHolder holder, int position) {
         String searchText = searchData.get(position);
         holder.tvName.setText(searchText);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listener.onTextClick(searchText);
+            }
+        });
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onDeleteClick(position);
             }
         });
     }

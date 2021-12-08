@@ -19,9 +19,9 @@
         android:id="@+id/tv_search_history_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="64dp"
         android:layout_marginBottom="8dp"
         android:text="search history"
         android:textSize="16dp"
@@ -29,5 +29,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/his_divider" />
+
+    <ImageView
+        android:id="@+id/img_delete_history"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="32dp"
+        android:src="@drawable/ic_baseline_close_24"
+        app:layout_constraintBottom_toBottomOf="@id/tv_search_history_item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_search_history_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
