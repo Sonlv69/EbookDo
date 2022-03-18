@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide(); // hide the title bar
         setContentView(R.layout.activity_main);
 
-        final HomeFragmentViewModel homeFragmentViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

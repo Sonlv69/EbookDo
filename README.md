@@ -31,7 +31,7 @@
 
 ## **NGUYÊN LÝ HOẠT ĐỘNG**
 
-![Sơ đồ nguyên lý)](https://lh3.googleusercontent.com/d/1ZO5gvN0fUtjfvK0RKLpKCllwfRr8W-ZZ)	
+![Sơ đồ nguyên lý](https://lh3.googleusercontent.com/d/1ZO5gvN0fUtjfvK0RKLpKCllwfRr8W-ZZ)
 
 ## **THIẾT KẾ HỆ THỐNG**
 ### **1. THUẬT TOÁN XỬ LÝ**
@@ -109,7 +109,7 @@ String android_id = Settings.Secure.getString(getContext().getContentResolver(),
 	
 **Mã của từng thiết bị riêng biệt sẽ được tạo tự động trên database khi người dùng tìm kiếm sách lần đầu tiên**
 
-![Sơ đồ nguyên lý)](https://lh3.googleusercontent.com/d/10Q_hDLalMHSU8A9fHNxp1UwpOaNPw8_u)
+![Mã của từng thiết bị riêng biệt sẽ được tạo tự động trên database khi người dùng tìm kiếm sách lần đầu tiên](https://lh3.googleusercontent.com/d/10Q_hDLalMHSU8A9fHNxp1UwpOaNPw8_u)
 
 Thêm dữ liệu vào database:
 
@@ -125,6 +125,6 @@ mDatabaseReference.child(ten_child_node).removeValue();
 	
 **Khi chạy ta sẽ được dữ liệu như thế này**
 	
-![Sơ đồ nguyên lý)](https://lh3.googleusercontent.com/d/1r5dLHOKib4Ikhv0eS9VcM82o2Lj83_hb)
+![Khi chạy ta sẽ được dữ liệu như thế này](https://lh3.googleusercontent.com/d/1r5dLHOKib4Ikhv0eS9VcM82o2Lj83_hb)
 
 
