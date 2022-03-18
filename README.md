@@ -1,25 +1,23 @@
 # Mô tả project(Project description)
 ## **TRIỂN KHAI HỆ THỐNG**
 ### **1. GIAO DIỆN ỨNG DỤNG**
-**Màn hình Home**
 
 ![Màn hình Home](https://lh3.googleusercontent.com/d/1Y6VMxpzJwAlk93cLGFZKh0U33AyvM8v2)
-
-**Màn hình nhập liệu search(hiển thị lịch sử tìm kiếm)**
+**Màn hình Home**
 
 ![Màn hình nhập liệu search(hiển thị lịch sử tìm kiếm)](https://lh3.googleusercontent.com/d/1v1bOn54niuTKyIbfbeC2H0Nbvod_A_Gh)
-
-**Màn hình Search**
+**Màn hình nhập liệu search(hiển thị lịch sử tìm kiếm)**
 
 ![Màn hình Search](https://lh3.googleusercontent.com/d/1Q3Mk2YDjb0TeOAN7vokWHFwX2BiLenW6)
-
-**Màn hình Download(hiển thị các file sách tải về)**
+**Màn hình Search**
 
 ![Màn hình Download(hiển thị các file sách tải về)](https://lh3.googleusercontent.com/d/1YzgpvQKN1Ypk4wcowt15yB4OYZwi8CqT)
+**Màn hình Download(hiển thị các file sách tải về)**
 			
 **Màn hình chi tiết của sách(hỗ trợ tính năng tải sách)**
 
 ![Màn hình chi tiết của sách(hỗ trợ tính năng tải sách)](https://lh3.googleusercontent.com/d/1hq8jzUPxch4A-hVFrwLWSFhnsLU9YO0K)
+**Màn hình Download(hiển thị các file sách tải về)**
 
 ### **2. CÁC TÍNH NĂNG CỦA ỨNG DỤNG**
 - Hiển thị danh sách xem trước các quyển sách tại trang chủ ở màn hình Home(tab Home)
