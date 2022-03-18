@@ -1,11 +1,10 @@
 # Mô tả project(Project description)
-##**TRIỂN KHAI HỆ THỐNG**
+## **TRIỂN KHAI HỆ THỐNG**
 **1. GIAO DIỆN ỨNG DỤNG**
-	    Màn hình Home 			      
-
+**Màn hình Home **			      
 ![Màn hình Home](https://lh3.googleusercontent.com/d/1ZO5gvN0fUtjfvK0RKLpKCllwfRr8W-ZZ)
 
-Màn hình Search
+**Màn hình Search**
 
 
 
