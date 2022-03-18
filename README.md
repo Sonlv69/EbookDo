@@ -55,8 +55,9 @@
 ### **3. CẤU TRÚC DỮ LIỆU VÀ PHƯƠNG THỨC SỬ DỤNG**
 **3.1 Sử dụng Jsoup phân tích html một trang web**
 Tạo đối tượng Document để kết nối đến trang web: 
-
-	`Document document = (Document)Jsoup.connect(url).timeout(30000).get();`
+`
+Document document = (Document)Jsoup.connect(url).timeout(30000).get();
+`
 	
 Với: - url là liên kết đến trang web cần phân tích.
      - timeout(30000) thời gian chờ kết nối.
@@ -66,6 +67,7 @@ Với: - url là liên kết đến trang web cần phân tích.
 ![Cấu trúc html cần phần tích](https://lh3.googleusercontent.com/d/1YdYKgCnBu0fBua3yKsNLmQofZ4qDX2fa)	
 
 Ví dụ với 1 trang html như trên, mục tiêu là cần lấy liên kết của thẻ `<a href=..>` sẽ được thực hiện như sau:
+
 	```
 	Elements sub = document.select("div.page_content " +
               	 			"> div.body " +
