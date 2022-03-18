@@ -64,35 +64,40 @@ Với: - url là liên kết đến trang web cần phân tích.
 ![Cấu trúc html cần phần tích](https://lh3.googleusercontent.com/d/1YdYKgCnBu0fBua3yKsNLmQofZ4qDX2fa)	
 
 Ví dụ với 1 trang html như trên, mục tiêu là cần lấy liên kết của thẻ <a href=..> sẽ được thực hiện như sau:
+	
 	`Elements sub = document.select("div.page_content " +
               	 			"> div.body " +
              	 	 		"> div " +
               				"> ul.results " +
               		 		"> li.booklink");`
- Câu lệnh query dữ liệu trên trang web: select hoặc selectFirst. Với select sẽ lấy được 1 tập các dữ liệu có cấu trúc giống nhau trong khi selectFirst thì lấy dữ liệu phù hợp đầu tiên.
- Lấy text của một thuộc tính trong thẻ sau khi đã query với ví dụ như html trên hình 13 ta lấy dòng chữ “Broken Barriers” của thẻ title, sau khi đã query được dữ liệu vào biến subA bằng phương thức text(): subA.text();
+- Câu lệnh query dữ liệu trên trang web: select hoặc selectFirst. Với select sẽ lấy được 1 tập các dữ liệu có cấu trúc giống nhau trong khi selectFirst thì lấy dữ liệu phù hợp đầu tiên.
+- Lấy text của một thuộc tính trong thẻ sau khi đã query với ví dụ như html trên hình 13 ta lấy dòng chữ “Broken Barriers” của thẻ title, sau khi đã query được dữ liệu vào biến subA bằng phương thức text(): subA.text();
 
 **Chữ Broken Barriers là tên sách cần lấy**
+	
 ![Chữ Broken Barriers là tên sách cần lấy](https://lh3.googleusercontent.com/d/1YdYKgCnBu0fBua3yKsNLmQofZ4qDX2fa)	
 	
 **3.2Sử dụng Firebase để lưu lịch sử tìm kiếm lên cloud database**
 Kết nối đến realtime database của Firebase: 
-//kết nối đến database
-FirebaseDatabase mDatabase mDatabase =FirebaseDatabase.getInstance(); 
+`//kết nối đến database
+FirebaseDatabase mDatabase mDatabase =FirebaseDatabase.getInstance(); `
 Tạo biến tham chiếu đến node cần xử lí:
-DatabaseReference mDatabaseReference mDatabaseReference = mDatabase.getReference().child(ten-cua-node);
+`DatabaseReference mDatabaseReference mDatabaseReference = mDatabase.getReference().child(ten-cua-node);`
 Để lưu trữ data riêng biệt cho mỗi thiết bị android, ta lấy mã bảo mật làm đại diện cho thiết bị và đặt mã đó làm tên cho root node trong database cho thiết bị đó:
-//phương thức lấy mã secure của thiết bị android
-String android_id = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+`//phương thức lấy mã secure của thiết bị android
+String android_id = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);`
 	
 **Mã của từng thiết bị riêng biệt sẽ được tạo tự động trên database khi người dùng tìm kiếm sách lần đầu tiên**
 
 	![Sơ đồ nguyên lý)](https://lh3.googleusercontent.com/d/1ZO5gvN0fUtjfvK0RKLpKCllwfRr8W-ZZ)
 
 Thêm dữ liệu vào database:
-mDatabaseReference.child(ten_child_node).setValue(data);
+`mDatabaseReference.child(ten_child_node).setValue(data);`
 Xóa dữ liệu khỏi database:
-mDatabaseReference.child(ten_child_node).removeValue();
-		Hình 20: Khi chạy ta sẽ được dữ liệu như thế này
+`mDatabaseReference.child(ten_child_node).removeValue();`
+	
+**Khi chạy ta sẽ được dữ liệu như thế này**
+	
+	![Sơ đồ nguyên lý)](https://lh3.googleusercontent.com/d/1ZO5gvN0fUtjfvK0RKLpKCllwfRr8W-ZZ)
 
 
