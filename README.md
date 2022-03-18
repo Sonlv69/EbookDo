@@ -1,7 +1,7 @@
 # Mô tả project(Project description)
 ## **TRIỂN KHAI HỆ THỐNG**
 ### **1. GIAO DIỆN ỨNG DỤNG**
-**Màn hình Home**			      
+**Màn hình Home**
 ![Màn hình Home](https://lh3.googleusercontent.com/d/1Y6VMxpzJwAlk93cLGFZKh0U33AyvM8v2)
 
 **Màn hình nhập liệu search(hiển thị lịch sử tìm kiếm)**
@@ -15,6 +15,7 @@
 			
 **Màn hình chi tiết của sách(hỗ trợ tính năng tải sách)**
 ![Màn hình Search](https://lh3.googleusercontent.com/d/1hq8jzUPxch4A-hVFrwLWSFhnsLU9YO0K)
+
 ### **2. CÁC TÍNH NĂNG CỦA ỨNG DỤNG**
 - Hiển thị danh sách xem trước các quyển sách tại trang chủ ở màn hình Home(tab Home)
 - Xem chi tiết từng quyển sách.
