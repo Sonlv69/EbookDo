@@ -63,7 +63,7 @@ Với: - url là liên kết đến trang web cần phân tích.
 
 ![Cấu trúc html cần phần tích](https://lh3.googleusercontent.com/d/1YdYKgCnBu0fBua3yKsNLmQofZ4qDX2fa)	
 
-Ví dụ với 1 trang html như trên, mục tiêu là cần lấy liên kết của thẻ <a href=..> sẽ được thực hiện như sau:
+Ví dụ với 1 trang html như trên, mục tiêu là cần lấy liên kết của thẻ `<a href=..>` sẽ được thực hiện như sau:
 	
 	`Elements sub = document.select("div.page_content " +
               	 			"> div.body " +
@@ -75,7 +75,7 @@ Ví dụ với 1 trang html như trên, mục tiêu là cần lấy liên kết 
 
 **Chữ Broken Barriers là tên sách cần lấy**
 	
-![Chữ Broken Barriers là tên sách cần lấy](https://lh3.googleusercontent.com/d/1YdYKgCnBu0fBua3yKsNLmQofZ4qDX2fa)	
+![Chữ Broken Barriers là tên sách cần lấy](https://lh3.googleusercontent.com/d/1TbklWOGlQvdEaERA8KHfIncVFkpyV8SZ)	
 	
 **3.2Sử dụng Firebase để lưu lịch sử tìm kiếm lên cloud database**
 Kết nối đến realtime database của Firebase: 
@@ -89,7 +89,7 @@ String android_id = Settings.Secure.getString(getContext().getContentResolver(),
 	
 **Mã của từng thiết bị riêng biệt sẽ được tạo tự động trên database khi người dùng tìm kiếm sách lần đầu tiên**
 
-	![Sơ đồ nguyên lý)](https://lh3.googleusercontent.com/d/1ZO5gvN0fUtjfvK0RKLpKCllwfRr8W-ZZ)
+![Sơ đồ nguyên lý)](https://lh3.googleusercontent.com/d/10Q_hDLalMHSU8A9fHNxp1UwpOaNPw8_u)
 
 Thêm dữ liệu vào database:
 `mDatabaseReference.child(ten_child_node).setValue(data);`
@@ -98,6 +98,6 @@ Xóa dữ liệu khỏi database:
 	
 **Khi chạy ta sẽ được dữ liệu như thế này**
 	
-	![Sơ đồ nguyên lý)](https://lh3.googleusercontent.com/d/1ZO5gvN0fUtjfvK0RKLpKCllwfRr8W-ZZ)
+![Sơ đồ nguyên lý)](https://lh3.googleusercontent.com/d/1r5dLHOKib4Ikhv0eS9VcM82o2Lj83_hb)
 
 
