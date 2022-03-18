@@ -69,13 +69,13 @@ Với: - url là liên kết đến trang web cần phân tích.
 
 Ví dụ với 1 trang html như trên, mục tiêu là cần lấy liên kết của thẻ `<a href=..>` sẽ được thực hiện như sau:
 
-	```
-	Elements sub = document.select("div.page_content " +
+```
+Elements sub = document.select("div.page_content " +
               	 			"> div.body " +
              	 	 		"> div " +
               				"> ul.results " +
               		 		"> li.booklink");
-	```
+```
 					
 - Câu lệnh query dữ liệu trên trang web: select hoặc selectFirst. Với select sẽ lấy được 1 tập các dữ liệu có cấu trúc giống nhau trong khi selectFirst thì lấy dữ liệu phù hợp đầu tiên.
 - Lấy text của một thuộc tính trong thẻ sau khi đã query với ví dụ như html trên hình 13 ta lấy dòng chữ “Broken Barriers” của thẻ title, sau khi đã query được dữ liệu vào biến subA bằng phương thức text(): subA.text();
