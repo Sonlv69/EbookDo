@@ -3,7 +3,7 @@
 **1. GIAO DIỆN ỨNG DỤNG**
 	    Màn hình Home 			      
 
-![Màn hình Home](https://drive.google.com/file/d/1ZO5gvN0fUtjfvK0RKLpKCllwfRr8W-ZZ/view?usp=sharing)
+![Màn hình Home](https://lh3.googleusercontent.com/d/[1ZO5gvN0fUtjfvK0RKLpKCllwfRr8W-ZZ])
 
 Màn hình Search
 
