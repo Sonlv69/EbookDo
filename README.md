@@ -71,10 +71,10 @@ Ví dụ với 1 trang html như trên, mục tiêu là cần lấy liên kết 
 
 ```
 Elements sub = document.select("div.page_content " +
-              	 			"> div.body " +
-             	 	 		"> div " +
-              				"> ul.results " +
-              		 		"> li.booklink");
+              	 		"> div.body " +
+             	 	 	"> div " +
+              			"> ul.results " +
+              		 	"> li.booklink");
 ```
 					
 - Câu lệnh query dữ liệu trên trang web: select hoặc selectFirst. Với select sẽ lấy được 1 tập các dữ liệu có cấu trúc giống nhau trong khi selectFirst thì lấy dữ liệu phù hợp đầu tiên.
