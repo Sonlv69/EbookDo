@@ -55,6 +55,7 @@
 ### **3. CẤU TRÚC DỮ LIỆU VÀ PHƯƠNG THỨC SỬ DỤNG**
 **3.1 Sử dụng Jsoup phân tích html một trang web**
 Tạo đối tượng Document để kết nối đến trang web: 
+
 	`Document document = (Document)Jsoup.connect(url).timeout(30000).get();`
 Với: - url là liên kết đến trang web cần phân tích.
      - timeout(30000) thời gian chờ kết nối.
@@ -79,11 +80,14 @@ Ví dụ với 1 trang html như trên, mục tiêu là cần lấy liên kết 
 	
 **3.2Sử dụng Firebase để lưu lịch sử tìm kiếm lên cloud database**
 Kết nối đến realtime database của Firebase: 
+
 `//kết nối đến database
 FirebaseDatabase mDatabase mDatabase =FirebaseDatabase.getInstance(); `
 Tạo biến tham chiếu đến node cần xử lí:
+
 `DatabaseReference mDatabaseReference mDatabaseReference = mDatabase.getReference().child(ten-cua-node);`
 Để lưu trữ data riêng biệt cho mỗi thiết bị android, ta lấy mã bảo mật làm đại diện cho thiết bị và đặt mã đó làm tên cho root node trong database cho thiết bị đó:
+
 `//phương thức lấy mã secure của thiết bị android
 String android_id = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);`
 	
@@ -92,8 +96,10 @@ String android_id = Settings.Secure.getString(getContext().getContentResolver(),
 ![Sơ đồ nguyên lý)](https://lh3.googleusercontent.com/d/10Q_hDLalMHSU8A9fHNxp1UwpOaNPw8_u)
 
 Thêm dữ liệu vào database:
+
 `mDatabaseReference.child(ten_child_node).setValue(data);`
 Xóa dữ liệu khỏi database:
+
 `mDatabaseReference.child(ten_child_node).removeValue();`
 	
 **Khi chạy ta sẽ được dữ liệu như thế này**
