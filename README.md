@@ -1,6 +1,13 @@
 # Mô tả project(Project description)
 ## **TRIỂN KHAI HỆ THỐNG**
-### **1. GIAO DIỆN ỨNG DỤNG**
+### **1. CÁC TÍNH NĂNG CỦA ỨNG DỤNG**
+- Hiển thị danh sách xem trước các quyển sách tại trang chủ ở màn hình Home(tab Home)
+- Xem chi tiết từng quyển sách.
+- Tải sách về dạng file epub.
+- Tìm kiếm sách.
+- Lưu lịch sử tìm kiếm và hiển thị lịch sử khi tìm kiếm.
+- Hiển thị các file sách đã tải về và hỗ trợ mở sách qua các phần mềm đọc file epub.
+### **2. GIAO DIỆN ỨNG DỤNG**
 
 ![Màn hình Home](https://lh3.googleusercontent.com/d/1Y6VMxpzJwAlk93cLGFZKh0U33AyvM8v2)		
 
@@ -21,16 +28,8 @@
 ![Màn hình chi tiết của sách(hỗ trợ tính năng tải sách)](https://lh3.googleusercontent.com/d/1hq8jzUPxch4A-hVFrwLWSFhnsLU9YO0K)	
 
 **Màn hình Download(hiển thị các file sách tải về)**
-
-### **2. CÁC TÍNH NĂNG CỦA ỨNG DỤNG**
-- Hiển thị danh sách xem trước các quyển sách tại trang chủ ở màn hình Home(tab Home)
-- Xem chi tiết từng quyển sách.
-- Tải sách về dạng file epub.
-- Tìm kiếm sách.
-- Lưu lịch sử tìm kiếm và hiển thị lịch sử khi tìm kiếm.
-- Hiển thị các file sách đã tải về và hỗ trợ mở sách qua các phần mềm đọc file epub.
   
-**NGUYÊN LÝ HOẠT ĐỘNG**
+## **NGUYÊN LÝ HOẠT ĐỘNG**
 
 ![Sơ đồ nguyên lý)](https://lh3.googleusercontent.com/d/1ZO5gvN0fUtjfvK0RKLpKCllwfRr8W-ZZ)	
 
