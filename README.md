@@ -57,6 +57,7 @@
 Tạo đối tượng Document để kết nối đến trang web: 
 
 	`Document document = (Document)Jsoup.connect(url).timeout(30000).get();`
+	
 Với: - url là liên kết đến trang web cần phân tích.
      - timeout(30000) thời gian chờ kết nối.
 
@@ -71,6 +72,7 @@ Ví dụ với 1 trang html như trên, mục tiêu là cần lấy liên kết 
              	 	 		"> div " +
               				"> ul.results " +
               		 		"> li.booklink");`
+					
 - Câu lệnh query dữ liệu trên trang web: select hoặc selectFirst. Với select sẽ lấy được 1 tập các dữ liệu có cấu trúc giống nhau trong khi selectFirst thì lấy dữ liệu phù hợp đầu tiên.
 - Lấy text của một thuộc tính trong thẻ sau khi đã query với ví dụ như html trên hình 13 ta lấy dòng chữ “Broken Barriers” của thẻ title, sau khi đã query được dữ liệu vào biến subA bằng phương thức text(): subA.text();
 
@@ -83,9 +85,11 @@ Kết nối đến realtime database của Firebase:
 
 `//kết nối đến database
 FirebaseDatabase mDatabase mDatabase =FirebaseDatabase.getInstance(); `
+
 Tạo biến tham chiếu đến node cần xử lí:
 
 `DatabaseReference mDatabaseReference mDatabaseReference = mDatabase.getReference().child(ten-cua-node);`
+
 Để lưu trữ data riêng biệt cho mỗi thiết bị android, ta lấy mã bảo mật làm đại diện cho thiết bị và đặt mã đó làm tên cho root node trong database cho thiết bị đó:
 
 `//phương thức lấy mã secure của thiết bị android
@@ -98,6 +102,7 @@ String android_id = Settings.Secure.getString(getContext().getContentResolver(),
 Thêm dữ liệu vào database:
 
 `mDatabaseReference.child(ten_child_node).setValue(data);`
+
 Xóa dữ liệu khỏi database:
 
 `mDatabaseReference.child(ten_child_node).removeValue();`
