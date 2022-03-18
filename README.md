@@ -1,11 +1,11 @@
 # Mô tả project(Project description)
 ##**TRIỂN KHAI HỆ THỐNG**
 **1. GIAO DIỆN ỨNG DỤNG**
-	    Màn hình Home 			      Màn hình Search
+	    Màn hình Home 			      
 
-![Màn hình Home](https://myoctocat.com/assets/images/base-octocat.svg)
+![Màn hình Home](https://drive.google.com/file/d/1ZO5gvN0fUtjfvK0RKLpKCllwfRr8W-ZZ/view?usp=sharing)
 
-
+Màn hình Search
 
 
 
