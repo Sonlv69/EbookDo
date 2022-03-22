@@ -54,6 +54,7 @@
 
 ### **3. CẤU TRÚC DỮ LIỆU VÀ PHƯƠNG THỨC SỬ DỤNG**
 **3.1 Sử dụng Jsoup phân tích html một trang web**
+
 Tạo đối tượng Document để kết nối đến trang web: 
 
 ```
@@ -85,6 +86,7 @@ Elements sub = document.select("div.page_content " +
 ![Chữ Broken Barriers là tên sách cần lấy](https://lh3.googleusercontent.com/d/1TbklWOGlQvdEaERA8KHfIncVFkpyV8SZ)	
 	
 **3.2Sử dụng Firebase để lưu lịch sử tìm kiếm lên cloud database**
+
 Kết nối đến realtime database của Firebase: 
 
 ```
