@@ -50,7 +50,7 @@
 **2.3 Project Gutenberg.org**
 - Project Gutenberg là một thư viện sách trực tuyến hoàn toàn miễn phí. Trang hỗ trợ nhiều thể loại sách và nhiều định dạng sách điện tử như Kindle và epub miễn phí, có thể tải xuống hoặc đọc trực tuyến. Ta sẽ tìm thấy nhiều tác phẩm văn học tuyệt vời của thế giới tại đây, chủ yếu là các tác phẩm cũ mà bản quyền của Mỹ đã hết hạn. Trang web được đóng góp bởi hàng nghìn tình nguyện viên đam mê  sách điện tử đã số hóa rất nhiều đầu sách để người đọc thưởng thức hoàn.
 - Lý do chọn trang web này để làm nguồn phát triển ứng dụng:
-- Không có lệ phí hay cần phải đăng ký! Mọi thứ từ Project Gutenberg nhẹ nhàng và hoàn toàn miễn phí cho người đọc. Quan trọng hơn các liên kết tải xuống của các file sách đều là liên kết trực tiếp, không có quảng cáo hay link rút gọn là một lợi thế rất lớn. Đây là những điều quan trọng và thuận lợi để chúng ta chọn trang web này làm nguồn dữ liệu cho ứng dụng.
+	Không có lệ phí hay cần phải đăng ký! Mọi thứ từ Project Gutenberg nhẹ nhàng và hoàn toàn miễn phí cho người đọc. Quan trọng hơn các liên kết tải xuống của các file sách đều là liên kết trực tiếp, không có quảng cáo hay link rút gọn là một lợi thế rất lớn. Đây là những điều quan trọng và thuận lợi để chúng ta chọn trang web này làm nguồn dữ liệu cho ứng dụng.
 
 ### **3. CẤU TRÚC DỮ LIỆU VÀ PHƯƠNG THỨC SỬ DỤNG**
 **3.1 Sử dụng Jsoup phân tích html một trang web**
